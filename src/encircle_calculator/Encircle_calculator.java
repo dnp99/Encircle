@@ -13,12 +13,19 @@ import java.util.Scanner;
  */
 public class Encircle_calculator {
 
+    ^\s*\((?:add|multiply)(\d+)(?:\s*([-+*\/])\s*((?:\s[-+])?\d+)\s*)+$
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
         Scanner inp= new Scanner(System.in);
+        System.out.println("Please Enter Expression: ");
+        String pattern= "\(\s(?:add|multiply)";
+        String expression=inp.next();
+        expression.replace(" ", "");
+        
+        
         
     }
     
