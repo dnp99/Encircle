@@ -6,57 +6,45 @@
 package encircle_calculator;
 
 import java.util.Scanner;
-
+import java.lang.Exception;
 /**
  *
  * @author Deep Patel
  */
 public class Encircle_calculator {
 
-    // ^\s*\((?:add|multiply)(\d+)(?:\s*([-+*\/])\s*((?:\s[-+])?\d+)\s*)+$
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         Scanner inp = new Scanner(System.in);
         System.out.println("Please Enter Expression: ");
-        //String pattern="[(](?:add|multiply) [0-9][0-9]";
         String expression = inp.nextLine();
-        //expression.replace(" ", "");
-        String op1 = "", op2 = "";
         try
         {
-           
-            //Loop through input 
-            for (int i = 0; i < expression.length(); i++) {
-                //Check for first space
-                if (expression.charAt(i) == ' ') {
-                    //Loop through mext space 
-                    for (int j = i + 1; j < expression.length(); j++) {
-                        //Stop at next space
-                        if (expression.charAt(j) == ' ') {
-                            //From space one to space 2=> first operand
-                            op1 = expression.substring(i + 1, j);
-                            //From space 2 to end of string second operand
-                            op2 = expression.substring(j + 1, expression.length() - 1);
-                            break;
-                        }
-                    }
-                    break;
-                }
-
-            }
-            //System.out.println(operation+" "+op1 + " " + op2);
-            if(!isNumeric(expression))
+            int totalExpression=getNumberofOperations(expression);
+            //check if expression contains only numeric data
+            if(isNumeric(expression))
             {
-                int result=doOperation(expression,Integer.parseInt(op1), Integer.parseInt(op2));
-                System.out.println("Result: "+result);
+                   System.out.println("Result: "+expression);   
             }
-            else
-            {
-                System.out.println("Result: "+expression);
+            
+            //For only one operation
+            if(totalExpression==1)
+            {      
+                System.out.println(evaluateExpression(expression));
             }
+            //For two operations
+            else if(totalExpression==2){
+                //evaluate  inner expressin
+                String innerExpression=getInnerExpression(expression);
+                //System.out.println(innerExpression);
+                
+                
+            }
+            //For three operations
+            else{
+                
+            }
+            //For more than three opertions getNumberofOperations() will throw exception
         }
         catch(Exception e)
         {
@@ -65,6 +53,83 @@ public class Encircle_calculator {
 
     }
 
+    //Evaluate Expression
+    public static int evaluateExpression(String expression) throws Exception
+    {
+        return doOperation(expression,getFirstOperand(expression),getSecondOperand(expression));
+        //System.out.println("Result: "+result);   
+        
+    }
+    
+    
+    //get inner expression
+    public static String getInnerExpression(String expression)
+    {
+        int startofString=0,endingOfString=0;
+        //start from one to excluse first parantheis
+        for (int i = 1; i < expression.length(); i++) {
+                    //Check for first appreance open pranthesis
+                    if (expression.charAt(i) == '(') {
+                        startofString=i+1;
+                    }
+                    //Check for first appreance closed pranthesis
+                    if (expression.charAt(i) == ')') {
+                        endingOfString=i;
+                        break;
+                    }
+        }       
+        return expression.substring(startofString,endingOfString);
+    }
+    
+    //get first operand
+    public static int getFirstOperand(String expression)
+    {
+         String op1 = "";
+        //Loop through input 
+                for (int i = 0; i < expression.length(); i++) {
+                    //Check for first space
+                    if (expression.charAt(i) == ' ') {
+                        //Loop through mext space 
+                        for (int j = i + 1; j < expression.length(); j++) {
+                            //Stop at next space
+                            if (expression.charAt(j) == ' ') {
+                                //From space one to space scond => first operand
+                                op1 = expression.substring(i + 1, j);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
+                }
+            return Integer.valueOf(op1);
+    }
+   
+    //get second operand
+    public static int getSecondOperand(String expression)
+    {
+         String op2 = "";
+        //Loop through input 
+                for (int i = 0; i < expression.length(); i++) {
+                    //Check for first space
+                    if (expression.charAt(i) == ' ') {
+                        //Loop through mext space 
+                        for (int j = i + 1; j < expression.length(); j++) {
+                            //Stop at next space
+                            if (expression.charAt(j) == ' ') {
+                                //From space 2 to end of string second operand
+                                op2 = expression.substring(j + 1, expression.length() - 1);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
+                }
+            return Integer.valueOf(op2);
+    }
+                                
+    //check if string contains only numbers
     public static boolean isNumeric(String input) {
         try {
              Integer.parseInt(input);
@@ -73,8 +138,39 @@ public class Encircle_calculator {
         }
         return true;
     }
-    public static void getNumberofOperations(String input) {
-
+    
+    //Get total number of expression
+    public static int getNumberofOperations(String input) throws Exception {
+        int openParanthesis=0;
+        int closeParanthesis=0;
+        for(int i=0;i<input.length();i++)
+        {
+            if(input.charAt(i)=='(' )
+            {
+                openParanthesis++;
+            }
+            else if(input.charAt(i)==')')
+            {
+                closeParanthesis++;
+            }
+        }
+        //System.out.println(openParanthesis);
+        //System.out.println(closeParanthesis);
+        //if it is integer and <=3 input is correct
+        if(openParanthesis==closeParanthesis && openParanthesis+closeParanthesis<=6 )
+        {
+            //return  open paranthesis or close paranthesis which is equal to toal number of expressions
+             return openParanthesis;
+        }
+        else{
+            if(openParanthesis>closeParanthesis)
+            throw new Exception("Error in Expresion: Parenthesis not closed");
+            else if(closeParanthesis>openParanthesis)
+            throw new Exception("Error in Expresion: closed paranthesis are more than open paranthesis ");
+            else
+            throw new Exception("Error in Expresion: Parenthesis");    
+        }
+       
     }
 
     public static int doOperation(String input,int op1, int op2) throws Exception {
