@@ -36,8 +36,10 @@ public class Encircle_calculator {
             else if(totalExpression==2){
                 //evaluate  inner expressin
                 String innerExpression=getInnerExpression(expression);
-                //System.out.println(innerExpression);
-                
+                System.out.println(innerExpression);
+                int innerResult=evaluateExpression(innerExpression);
+                String newExpression=expression.replaceAll('('+innerExpression+')', String.valueOf(innerResult));
+                System.out.println(newExpression);
                 
             }
             //For three operations
@@ -70,11 +72,11 @@ public class Encircle_calculator {
         for (int i = 1; i < expression.length(); i++) {
                     //Check for first appreance open pranthesis
                     if (expression.charAt(i) == '(') {
-                        startofString=i+1;
+                        startofString=i;
                     }
                     //Check for first appreance closed pranthesis
                     if (expression.charAt(i) == ')') {
-                        endingOfString=i;
+                        endingOfString=i+1;
                         break;
                     }
         }       
