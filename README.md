@@ -1,4 +1,3 @@
-Encircle, Waterloo
 S - expression Calculator  by Deep Patel 
 
 Developed in Java.
