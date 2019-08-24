@@ -4,27 +4,41 @@ Developed in Java.
 All the assumptions have been considered as described on github. 
 
 Implemented following functionalities
+
 1.For better user expierence - spaces before and after paranthesis is ignored.
+
 2.Just one space between operands and expression name and first operand.
+
 3.Support for add and multiply. Plus created CalculatorLogic class under Logic package to add more methods.
+
 4.No explicit limit in logic for how deep expression can be
+
 5.Expression names are not case sensitive. But correct spelling is required.
 
 
 Sample inputs:
+
 99
+
 (	add 3 4	)
+
 (multiply ( add 4 5	) 6)
+
 (add (add 3 4) 4)
+
 (add (multiply (add 5 4) 5 ) 7)
+
 (add 4 (add 9 (multiply 5 9)	) )
         
 	
 Source Code Guide
 
 Main class - Encircle_calculator.java
+
 Main package - encircle_calculator
+
 logic package:
+
 	1. CalculatorLogic.java -contains core logic for calculator
 utilities package:
 	1. Calculation.java - Provides method - evaluateExpression() for doing calculation
