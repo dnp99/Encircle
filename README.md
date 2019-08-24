@@ -1,7 +1,7 @@
 S - expression Calculator  by Deep Patel 
 
 Developed in Java - Command Line Application
-All the assumptions have been considered as described on github. 
+ 
 
 Implemented following functionalities
 
